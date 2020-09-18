@@ -1,0 +1,19 @@
+name: Back End Tests
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm i
+    - name: MongoDB in GitHub Actions
+      uses: supercharge/mongodb-github-action@1.3.0
+    - name: Start Redis
+      uses: supercharge/redis-github-action@1.1.0
+    - name: Run tests
+      run: npm run test
+      env:
+        MONGODB_URI: mongodb://localhost:27017/express-github-actions
+    - name: Prettify code
+      run: npm run format:check
